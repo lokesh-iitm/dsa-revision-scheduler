@@ -70,6 +70,9 @@ document
     const data = await response.json();
 
     alert(data.message);
+    document.getElementById("title").value = "";
+    document.getElementById("topic").value = "";
+    document.getElementById("difficulty").value = "";
 
     loadDashboard();
 });

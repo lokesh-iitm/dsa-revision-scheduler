@@ -40,7 +40,8 @@ def upcoming_revisions():
     cursor = conn.cursor()
 
     cursor.execute("""
-    SELECT p.title,
+    SELECT r.id,
+           p.title,
            p.topic,
            p.difficulty,
            r.revision_date

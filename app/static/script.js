@@ -122,6 +122,24 @@ document
     loadUpcomingRevisions();
     
 }
+async function completeRevision(id){
+
+    const response =
+        await fetch(
+            `/revision/${id}`,
+            {
+                method: "PUT"
+            }
+        );
+
+    const data =
+        await response.json();
+
+    alert(data.message);
+
+    loadDashboard();
+    loadUpcomingRevisions();
+}
 let editingProblemId = null;
 
 function editProblem(
@@ -249,17 +267,24 @@ async function loadUpcomingRevisions(){
 
     tbody.innerHTML = "";
 
-    data.forEach(revision => {
+data.forEach(revision => {
 
-        tbody.innerHTML += `
-            <tr>
-                <td>${revision[0]}</td>
-                <td>${revision[1]}</td>
-                <td>${revision[2]}</td>
-                <td>${revision[3]}</td>
-            </tr>
-        `;
-    });
+    tbody.innerHTML += `
+        <tr>
+            <td>${revision[1]}</td>
+            <td>${revision[2]}</td>
+            <td>${revision[3]}</td>
+            <td>${revision[4]}</td>
+
+            <td>
+                <button
+                    onclick="completeRevision(${revision[0]})">
+                    Complete
+                </button>
+            </td>
+        </tr>
+    `;
+});
 }
 loadDashboard();
 loadProblems();

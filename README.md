@@ -1,96 +1,208 @@
 # DSA Revision Scheduler
 
-A FastAPI-based application that helps users revise solved DSA problems using a spaced repetition strategy.
+A full-stack DSA Revision Tracking application built using **FastAPI**, **SQLite**, **HTML**, **CSS**, **JavaScript**, and **Chart.js**.
+
+The application helps users track solved DSA problems, schedule revisions using spaced repetition, monitor revision progress, and visualize analytics through an interactive dashboard.
+
+---
 
 ## Features
 
-- Add solved problems
-- Automatically generate revision schedule
-- View today's revisions
-- Mark revisions complete
-- Dashboard analytics
-- Pre-loaded sample DSA problems
+### Problem Management
+
+* Add new DSA problems
+* Edit existing problems
+* Delete problems
+* View all solved problems
+
+### Search & Filtering
+
+* Search problems by title
+* Filter problems by topic
+* Filter problems by difficulty
+
+### Revision Tracking
+
+* Automatic revision schedule generation
+* Upcoming revisions dashboard
+* Mark revisions as completed
+* Completed revision tracking
+
+### Analytics Dashboard
+
+* Total solved problems
+* Pending revisions count
+* Completed revisions count
+* Revision streak tracker
+* Topic-wise analytics
+
+### Data Visualization
+
+* Pie chart showing topic distribution using Chart.js
+
+### Export Functionality
+
+* Export all problems to CSV format
+
+---
 
 ## Tech Stack
 
-- Python
-- FastAPI
-- SQLite
+### Backend
 
-## Setup & Run
+* FastAPI
+* SQLite
 
-### 1. Install Dependencies
+### Frontend
+
+* HTML
+* CSS
+* JavaScript
+
+### Visualization
+
+* Chart.js
+
+---
+
+## Project Structure
+
+```text
+DSA-Revision-Scheduler
+│
+├── app
+│   ├── database
+│   │   ├── db.py
+│   │   └── models.py
+│   │
+│   ├── routers
+│   │   ├── problems.py
+│   │   └── revisions.py
+│   │
+│   ├── schemas
+│   │   └── problem.py
+│   │
+│   ├── static
+│   │   ├── style.css
+│   │   └── script.js
+│   │
+│   ├── templates
+│   │   └── index.html
+│   │
+│   └── main.py
+│
+├── scheduler.db
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## Installation
+
+### Clone Repository
+
+```bash
+git clone <your-github-repository-url>
+cd DSA-Revision-Scheduler
+```
+
+### Create Virtual Environment
+
+```bash
+python -m venv venv
+```
+
+### Activate Virtual Environment
+
+Windows:
+
+```bash
+venv\Scripts\activate
+```
+
+### Install Dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Start the Server
+### Run Application
+
 ```bash
-python -m uvicorn main:app --reload
+python -m uvicorn app.main:app --reload
 ```
 
-Or on Windows:
-```bash
-start_server.bat
+### Open Browser
+
+```text
+http://127.0.0.1:8000
 ```
 
-The app will be available at: **http://localhost:8000**
-
-### 3. View API Documentation
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
+---
 
 ## API Endpoints
 
-### Get Sample Problems (Pre-loaded)
-The app automatically loads 10 sample DSA problems when started:
-- Two Sum (Arrays - Easy)
-- Binary Search (Searching - Easy)
-- Valid Parentheses (Stack - Easy)
-- Merge Sort (Sorting - Medium)
-- Longest Substring Without Repeating Characters (Strings - Medium)
-- Longest Palindromic Substring (Strings - Medium)
-- Number of Islands (Graph/DFS - Medium)
-- Reverse Linked List (Linked List - Easy)
-- Median of Two Sorted Arrays (Arrays - Hard)
-- Word Ladder (Graph/BFS - Hard)
+### Problems
 
-### Get All Problems
-```bash
-curl http://localhost:8000/problems
-```
+| Method | Endpoint      | Description      |
+| ------ | ------------- | ---------------- |
+| POST   | /problem      | Add problem      |
+| PUT    | /problem/{id} | Update problem   |
+| DELETE | /problem/{id} | Delete problem   |
+| GET    | /problems     | Get all problems |
 
-### Get Today's Revisions
-```bash
-curl http://localhost:8000/revisions/today
-```
+### Revisions
 
-### Add a New Problem
-```bash
-curl -X POST http://localhost:8000/problem \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Longest Common Subsequence",
-    "topic": "Dynamic Programming",
-    "difficulty": "Hard"
-  }'
-```
+| Method | Endpoint            |
+| ------ | ------------------- |
+| GET    | /revisions/today    |
+| GET    | /revisions/upcoming |
+| GET    | /revisions/history  |
+| PUT    | /revision/{id}      |
 
-### View Dashboard
-```bash
-curl http://localhost:8000/dashboard
-```
+### Analytics
 
-### Mark a Revision Complete
-```bash
-curl -X PUT http://localhost:8000/revision/1
-```
+| Method | Endpoint              |
+| ------ | --------------------- |
+| GET    | /dashboard            |
+| GET    | /dashboard/topic-wise |
+| GET    | /streak               |
+| GET    | /export               |
 
-## How to Test
+---
 
-1. **Start the server** and visit **http://localhost:8000/docs**
-2. **Sample problems are automatically loaded** - go to `/problems` to see them
-3. **Add your own problems** using the `/problem` endpoint
-4. **Check revisions** using `/revisions/today`
-5. **View stats** on the `/dashboard` endpoint
+## Future Improvements
 
+* User Authentication
+* Login & Registration
+* Email Revision Reminders
+* Dark Mode
+* Deployment on Render/Railway
+* AI-Based Revision Suggestions
+
+---
+
+## Screenshots
+
+### Dashboard
+
+(Add screenshot here)
+
+### Problems Table
+
+(Add screenshot here)
+
+### Upcoming Revisions
+
+(Add screenshot here)
+
+### Topic Analytics
+
+(Add screenshot here)
+
+---
+
+## Author
+
+Lokesh Prasad

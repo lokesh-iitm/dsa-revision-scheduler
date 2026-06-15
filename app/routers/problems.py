@@ -212,3 +212,22 @@ def export_problems():
         media_type="text/csv",
         filename=filename
     )
+@router.get("/streak")
+def revision_streak():
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT COUNT(*)
+    FROM revisions
+    WHERE completed = 1
+    """)
+
+    streak = cursor.fetchone()[0]
+
+    conn.close()
+
+    return {
+        "streak": streak
+    }

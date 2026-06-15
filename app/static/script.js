@@ -359,3 +359,21 @@ function exportCSV(){
     window.location.href =
         "/export";
 }
+async function loadStreak(){
+
+    const response =
+        await fetch("/streak");
+
+    const data =
+        await response.json();
+
+    document.getElementById(
+        "revision-streak"
+    ).innerText =
+        data.streak;
+}
+loadDashboard();
+loadProblems();
+loadUpcomingRevisions();
+loadTopicChart();
+loadStreak();

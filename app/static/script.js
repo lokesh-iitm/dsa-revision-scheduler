@@ -9,6 +9,8 @@ async function loadDashboard(){
 
     document.getElementById("pending-revisions").innerText =
         data.pending_revisions;
+        document.getElementById("completed-revisions").innerText =
+    data.completed_revisions;
 }
 async function loadProblems(){
 
@@ -352,3 +354,8 @@ loadDashboard();
 loadProblems();
 loadUpcomingRevisions();
 loadTopicChart();
+function exportCSV(){
+
+    window.location.href =
+        "/export";
+}

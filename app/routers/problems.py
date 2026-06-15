@@ -3,7 +3,8 @@ from datetime import datetime, timedelta
 
 from app.schemas.problem import Problem
 from app.database.db import get_connection
-
+from fastapi.responses import FileResponse
+import csv
 router = APIRouter()
 
 
@@ -71,6 +72,7 @@ def get_problems():
 
 
 @router.get("/dashboard")
+@router.get("/dashboard")
 def dashboard():
 
     conn = get_connection()
@@ -88,11 +90,19 @@ def dashboard():
     """)
     pending = cursor.fetchone()[0]
 
+    cursor.execute("""
+    SELECT COUNT(*)
+    FROM revisions
+    WHERE completed = 1
+    """)
+    completed = cursor.fetchone()[0]
+
     conn.close()
 
     return {
         "total_solved_problems": total_problems,
-        "pending_revisions": pending
+        "pending_revisions": pending,
+        "completed_revisions": completed
     }
 @router.get("/dashboard/topic-wise")
 def topic_wise_dashboard():
@@ -166,3 +176,39 @@ def update_problem(problem_id: int, problem: Problem):
     return {
         "message": "Problem updated successfully"
     }
+@router.get("/export")
+def export_problems():
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT *
+    FROM problems
+    """)
+
+    rows = cursor.fetchall()
+
+    conn.close()
+
+    filename = "problems.csv"
+
+    with open(filename, "w", newline="") as file:
+
+        writer = csv.writer(file)
+
+        writer.writerow([
+            "ID",
+            "Title",
+            "Topic",
+            "Difficulty",
+            "Solved Date"
+        ])
+
+        writer.writerows(rows)
+
+    return FileResponse(
+        filename,
+        media_type="text/csv",
+        filename=filename
+    )

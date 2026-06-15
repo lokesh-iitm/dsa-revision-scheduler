@@ -2,7 +2,7 @@
 
 A full-stack DSA Revision Tracking application built using **FastAPI**, **SQLite**, **HTML**, **CSS**, **JavaScript**, and **Chart.js**.
 
-The application helps users track solved DSA problems, schedule revisions using spaced repetition, monitor revision progress, and visualize analytics through an interactive dashboard.
+The application helps users track solved DSA problems, automatically schedule revisions using spaced repetition, monitor revision progress, and visualize learning analytics through an interactive dashboard.
 
 ---
 
@@ -10,7 +10,7 @@ The application helps users track solved DSA problems, schedule revisions using 
 
 ### Problem Management
 
-* Add new DSA problems
+* Add DSA problems
 * Edit existing problems
 * Delete problems
 * View all solved problems
@@ -18,15 +18,16 @@ The application helps users track solved DSA problems, schedule revisions using 
 ### Search & Filtering
 
 * Search problems by title
-* Filter problems by topic
-* Filter problems by difficulty
+* Filter by topic
+* Filter by difficulty
 
 ### Revision Tracking
 
-* Automatic revision schedule generation
+* Automatic revision scheduling using spaced repetition
 * Upcoming revisions dashboard
 * Mark revisions as completed
-* Completed revision tracking
+* Completed revisions tracking
+* Revision streak monitoring
 
 ### Analytics Dashboard
 
@@ -38,11 +39,70 @@ The application helps users track solved DSA problems, schedule revisions using 
 
 ### Data Visualization
 
-* Pie chart showing topic distribution using Chart.js
+* Interactive Pie Chart using Chart.js
+* Topic distribution analytics
 
 ### Export Functionality
 
 * Export all problems to CSV format
+
+---
+
+## Repository
+
+GitHub Repository:
+
+https://github.com/lokesh-iitm/dsa-revision-scheduler
+
+---
+
+## Screenshots
+
+### Dashboard
+
+Displays total problems, pending revisions, completed revisions, and revision streak.
+
+![Dashboard](screenshots/dashboard.png)
+
+---
+
+### Add Problem
+
+Add new DSA problems with topic and difficulty information.
+
+![Add Problem](screenshots/add-problem.png)
+
+---
+
+### Search & Filters
+
+Quickly search and filter problems by topic and difficulty.
+
+![Search and Filters](screenshots/search-filter.png)
+
+---
+
+### Revision Tracking
+
+Track upcoming revisions and mark them as completed.
+
+![Revision Tracking](screenshots/revisions.png)
+
+---
+
+### Analytics Dashboard
+
+Visualize topic distribution using an interactive pie chart.
+
+![Analytics](screenshots/analytics.png)
+
+---
+
+### CSV Export
+
+Export all stored problems into CSV format.
+
+![CSV Export](screenshots/csv-export.png)
 
 ---
 
@@ -59,7 +119,7 @@ The application helps users track solved DSA problems, schedule revisions using 
 * CSS
 * JavaScript
 
-### Visualization
+### Data Visualization
 
 * Chart.js
 
@@ -68,7 +128,7 @@ The application helps users track solved DSA problems, schedule revisions using 
 ## Project Structure
 
 ```text
-DSA-Revision-Scheduler
+dsa-revision-scheduler
 │
 ├── app
 │   ├── database
@@ -91,6 +151,14 @@ DSA-Revision-Scheduler
 │   │
 │   └── main.py
 │
+├── screenshots
+│   ├── dashboard.png
+│   ├── add-problem.png
+│   ├── search-filter.png
+│   ├── revisions.png
+│   ├── analytics.png
+│   └── csv-export.png
+│
 ├── scheduler.db
 ├── requirements.txt
 └── README.md
@@ -103,8 +171,8 @@ DSA-Revision-Scheduler
 ### Clone Repository
 
 ```bash
-git clone <your-github-repository-url>
-cd DSA-Revision-Scheduler
+git clone https://github.com/lokesh-iitm/dsa-revision-scheduler.git
+cd dsa-revision-scheduler
 ```
 
 ### Create Virtual Environment
@@ -147,28 +215,28 @@ http://127.0.0.1:8000
 
 | Method | Endpoint      | Description      |
 | ------ | ------------- | ---------------- |
-| POST   | /problem      | Add problem      |
-| PUT    | /problem/{id} | Update problem   |
-| DELETE | /problem/{id} | Delete problem   |
+| POST   | /problem      | Add a problem    |
 | GET    | /problems     | Get all problems |
+| PUT    | /problem/{id} | Update a problem |
+| DELETE | /problem/{id} | Delete a problem |
 
 ### Revisions
 
-| Method | Endpoint            |
-| ------ | ------------------- |
-| GET    | /revisions/today    |
-| GET    | /revisions/upcoming |
-| GET    | /revisions/history  |
-| PUT    | /revision/{id}      |
+| Method | Endpoint            | Description            |
+| ------ | ------------------- | ---------------------- |
+| GET    | /revisions/today    | Today's revisions      |
+| GET    | /revisions/upcoming | Upcoming revisions     |
+| GET    | /revisions/history  | Revision history       |
+| PUT    | /revision/{id}      | Mark revision complete |
 
 ### Analytics
 
-| Method | Endpoint              |
-| ------ | --------------------- |
-| GET    | /dashboard            |
-| GET    | /dashboard/topic-wise |
-| GET    | /streak               |
-| GET    | /export               |
+| Method | Endpoint              | Description          |
+| ------ | --------------------- | -------------------- |
+| GET    | /dashboard            | Dashboard statistics |
+| GET    | /dashboard/topic-wise | Topic-wise analytics |
+| GET    | /streak               | Revision streak      |
+| GET    | /export               | Export data as CSV   |
 
 ---
 
@@ -177,32 +245,18 @@ http://127.0.0.1:8000
 * User Authentication
 * Login & Registration
 * Email Revision Reminders
-* Dark Mode
-* Deployment on Render/Railway
-* AI-Based Revision Suggestions
-
----
-
-## Screenshots
-
-### Dashboard
-
-(Add screenshot here)
-
-### Problems Table
-
-(Add screenshot here)
-
-### Upcoming Revisions
-
-(Add screenshot here)
-
-### Topic Analytics
-
-(Add screenshot here)
+* Dark Mode Support
+* Cloud Deployment
+* AI-Based Revision Recommendations
 
 ---
 
 ## Author
 
-Lokesh Prasad
+**Lokesh Prasad**
+
+GitHub Profile:
+https://github.com/lokesh-iitm
+
+Project Repository:
+https://github.com/lokesh-iitm/dsa-revision-scheduler

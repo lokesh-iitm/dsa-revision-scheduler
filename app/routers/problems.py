@@ -138,3 +138,31 @@ def delete_problem(problem_id: int):
     return {
         "message": "Problem deleted successfully"
     }
+@router.put("/problem/{problem_id}")
+def update_problem(problem_id: int, problem: Problem):
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        UPDATE problems
+        SET title = ?,
+            topic = ?,
+            difficulty = ?
+        WHERE id = ?
+        """,
+        (
+            problem.title,
+            problem.topic,
+            problem.difficulty,
+            problem_id
+        )
+    )
+
+    conn.commit()
+    conn.close()
+
+    return {
+        "message": "Problem updated successfully"
+    }

@@ -72,10 +72,24 @@ async function loadProblems(){
     <td>${problem[2]}</td>
     <td>${problem[3]}</td>
     <td>${problem[4]}</td>
+
     <td>
-        <button onclick="deleteProblem(${problem[0]})">
+
+        <button
+            onclick="editProblem(
+                ${problem[0]},
+                '${problem[1]}',
+                '${problem[2]}',
+                '${problem[3]}'
+            )">
+            Edit
+        </button>
+
+        <button
+            onclick="deleteProblem(${problem[0]})">
             Delete
         </button>
+
     </td>
 </tr>
         `;
@@ -97,10 +111,48 @@ async function deleteProblem(id){
         await response.json();
 
     alert(data.message);
+    editingProblemId = null;
+
+document
+.querySelector("#problem-form button")
+.innerText = "Add Problem";
 
     loadDashboard();
     loadProblems();
     loadUpcomingRevisions();
+    
+}
+let editingProblemId = null;
+
+function editProblem(
+    id,
+    title,
+    topic,
+    difficulty
+){
+
+    editingProblemId = id;
+
+    const titleInput =
+        document.getElementById("title");
+
+    const topicInput =
+        document.getElementById("topic");
+
+    const difficultyInput =
+        document.getElementById("difficulty");
+
+    console.log(titleInput);
+    console.log(topicInput);
+    console.log(difficultyInput);
+
+    titleInput.value = title;
+    topicInput.value = topic;
+    difficultyInput.value = difficulty;
+
+    document
+        .querySelector("#problem-form button")
+        .innerText = "Update Problem";
 }
 function loadTopics(data){
 
@@ -153,17 +205,24 @@ document
     };
 
     const response = await fetch(
-        "/problem",
-        {
-            method: "POST",
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+    editingProblemId
+        ? `/problem/${editingProblemId}`
+        : "/problem",
 
-            body: JSON.stringify(problem)
-        }
-    );
+    {
+        method:
+            editingProblemId
+            ? "PUT"
+            : "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(problem)
+    }
+);
 
     const data = await response.json();
 

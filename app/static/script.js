@@ -66,17 +66,41 @@ async function loadProblems(){
     data.forEach(problem => {
 
         tbody.innerHTML += `
-            <tr>
-                <td>${problem[0]}</td>
-                <td>${problem[1]}</td>
-                <td>${problem[2]}</td>
-                <td>${problem[3]}</td>
-                <td>${problem[4]}</td>
-            </tr>
+           <tr>
+    <td>${problem[0]}</td>
+    <td>${problem[1]}</td>
+    <td>${problem[2]}</td>
+    <td>${problem[3]}</td>
+    <td>${problem[4]}</td>
+    <td>
+        <button onclick="deleteProblem(${problem[0]})">
+            Delete
+        </button>
+    </td>
+</tr>
         `;
     });
 
     loadTopics(data);
+}
+async function deleteProblem(id){
+
+    const response =
+        await fetch(
+            `/problem/${id}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+    const data =
+        await response.json();
+
+    alert(data.message);
+
+    loadDashboard();
+    loadProblems();
+    loadUpcomingRevisions();
 }
 function loadTopics(data){
 

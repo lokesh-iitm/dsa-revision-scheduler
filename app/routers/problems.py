@@ -116,3 +116,25 @@ def topic_wise_dashboard():
         result[topic] = count
 
     return result
+@router.delete("/problem/{problem_id}")
+def delete_problem(problem_id: int):
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM revisions WHERE problem_id = ?",
+        (problem_id,)
+    )
+
+    cursor.execute(
+        "DELETE FROM problems WHERE id = ?",
+        (problem_id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return {
+        "message": "Problem deleted successfully"
+    }

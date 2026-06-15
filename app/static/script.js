@@ -75,3 +75,30 @@ document
 });
 loadDashboard();
 loadProblems();
+async function loadUpcomingRevisions(){
+
+    const response =
+        await fetch("/revisions/upcoming");
+
+    const data = await response.json();
+
+    const tbody =
+        document.querySelector("#revisions-table tbody");
+
+    tbody.innerHTML = "";
+
+    data.forEach(revision => {
+
+        tbody.innerHTML += `
+            <tr>
+                <td>${revision[0]}</td>
+                <td>${revision[1]}</td>
+                <td>${revision[2]}</td>
+                <td>${revision[3]}</td>
+            </tr>
+        `;
+    });
+}
+loadDashboard();
+loadProblems();
+loadUpcomingRevisions();

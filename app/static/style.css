@@ -65,3 +65,7 @@ th{
     margin-right:10px;
     margin-bottom:20px;
 }
+#topicChart{
+    max-width:500px;
+    margin-top:20px;
+}

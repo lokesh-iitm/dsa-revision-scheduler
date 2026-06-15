@@ -228,3 +228,43 @@ document
 loadDashboard();
 loadProblems();
 loadUpcomingRevisions();
+async function loadTopicChart(){
+
+    const response =
+        await fetch(
+            "/dashboard/topic-wise"
+        );
+
+    const data =
+        await response.json();
+
+    const labels =
+        Object.keys(data);
+
+    const values =
+        Object.values(data);
+
+    new Chart(
+        document.getElementById(
+            "topicChart"
+        ),
+        {
+            type: "pie",
+
+            data: {
+
+                labels: labels,
+
+                datasets: [
+                    {
+                        data: values
+                    }
+                ]
+            }
+        }
+    );
+}
+loadDashboard();
+loadProblems();
+loadUpcomingRevisions();
+loadTopicChart();

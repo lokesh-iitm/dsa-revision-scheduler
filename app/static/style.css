@@ -31,3 +31,12 @@ input{
 button{
     padding:10px 15px;
 }
+table{
+    margin-top:20px;
+    border-collapse: collapse;
+    width:100%;
+}
+
+th, td{
+    padding:10px;
+}

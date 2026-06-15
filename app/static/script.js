@@ -10,6 +10,30 @@ async function loadDashboard(){
     document.getElementById("pending-revisions").innerText =
         data.pending_revisions;
 }
+async function loadProblems(){
+
+    const response = await fetch("/problems");
+
+    const data = await response.json();
+
+    const tbody =
+        document.querySelector("#problems-table tbody");
+
+    tbody.innerHTML = "";
+
+    data.forEach(problem => {
+
+        tbody.innerHTML += `
+            <tr>
+                <td>${problem[0]}</td>
+                <td>${problem[1]}</td>
+                <td>${problem[2]}</td>
+                <td>${problem[3]}</td>
+                <td>${problem[4]}</td>
+            </tr>
+        `;
+    });
+}
 
 loadDashboard();
 document
@@ -49,3 +73,5 @@ document
 
     loadDashboard();
 });
+loadDashboard();
+loadProblems();

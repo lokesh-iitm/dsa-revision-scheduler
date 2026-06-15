@@ -42,6 +42,69 @@ init_db()
 
 
 # ---------------------
+# LOAD SAMPLE DATA
+# ---------------------
+def load_sample_problems():
+    """Load sample DSA problems into the database"""
+    sample_problems = [
+        {"title": "Two Sum", "topic": "Arrays", "difficulty": "Easy"},
+        {"title": "Binary Search", "topic": "Searching", "difficulty": "Easy"},
+        {"title": "Merge Sort", "topic": "Sorting", "difficulty": "Medium"},
+        {"title": "Longest Substring Without Repeating Characters", "topic": "Strings", "difficulty": "Medium"},
+        {"title": "Valid Parentheses", "topic": "Stack", "difficulty": "Easy"},
+        {"title": "Reverse Linked List", "topic": "Linked List", "difficulty": "Easy"},
+        {"title": "Word Ladder", "topic": "Graph/BFS", "difficulty": "Hard"},
+        {"title": "Median of Two Sorted Arrays", "topic": "Arrays", "difficulty": "Hard"},
+        {"title": "Longest Palindromic Substring", "topic": "Strings", "difficulty": "Medium"},
+        {"title": "Number of Islands", "topic": "Graph/DFS", "difficulty": "Medium"},
+    ]
+    
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    
+    # Check if problems already exist
+    cursor.execute("SELECT COUNT(*) FROM problems")
+    count = cursor.fetchone()[0]
+    
+    if count == 0:
+        # Add sample problems
+        for problem in sample_problems:
+            solved_date = (datetime.now() - timedelta(days=7)).date().isoformat()
+            
+            cursor.execute(
+                """
+                INSERT INTO problems(title, topic, difficulty, solved_date)
+                VALUES(?,?,?,?)
+                """,
+                (problem["title"], problem["topic"], problem["difficulty"], solved_date)
+            )
+            
+            problem_id = cursor.lastrowid
+            intervals = [1, 3, 7, 15, 30]
+            
+            for days in intervals:
+                revision_date = (
+                    datetime.now() + timedelta(days=days)
+                ).date().isoformat()
+                
+                cursor.execute(
+                    """
+                    INSERT INTO revisions(problem_id, revision_date)
+                    VALUES(?,?)
+                    """,
+                    (problem_id, revision_date)
+                )
+        
+        conn.commit()
+    
+    conn.close()
+
+
+# Load sample problems on startup
+load_sample_problems()
+
+
+# ---------------------
 # REQUEST MODEL
 # ---------------------
 class Problem(BaseModel):
@@ -100,6 +163,18 @@ def add_problem(problem: Problem):
     return {
         "message": "Problem added successfully",
         "problem_id": problem_id
+    }
+
+
+# ---------------------
+# SEED SAMPLE DATA
+# ---------------------
+@app.post("/seed")
+def seed_data():
+    """Load sample DSA problems into the database"""
+    load_sample_problems()
+    return {
+        "message": "Sample problems loaded successfully"
     }
 
 

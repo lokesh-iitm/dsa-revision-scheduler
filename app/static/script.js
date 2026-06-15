@@ -12,12 +12,54 @@ async function loadDashboard(){
 }
 async function loadProblems(){
 
-    const response = await fetch("/problems");
+    const response =
+        await fetch("/problems");
 
-    const data = await response.json();
+    let data =
+        await response.json();
+
+    const search =
+        document
+        .getElementById("search-box")
+        .value
+        .toLowerCase();
+
+    const topic =
+        document
+        .getElementById("topic-filter")
+        .value;
+
+    const difficulty =
+        document
+        .getElementById("difficulty-filter")
+        .value;
+
+    data = data.filter(problem => {
+
+        const matchesSearch =
+            problem[1]
+            .toLowerCase()
+            .includes(search);
+
+        const matchesTopic =
+            topic === ""
+            || problem[2] === topic;
+
+        const matchesDifficulty =
+            difficulty === ""
+            || problem[3] === difficulty;
+
+        return (
+            matchesSearch
+            && matchesTopic
+            && matchesDifficulty
+        );
+    });
 
     const tbody =
-        document.querySelector("#problems-table tbody");
+        document.querySelector(
+            "#problems-table tbody"
+        );
 
     tbody.innerHTML = "";
 
@@ -33,8 +75,40 @@ async function loadProblems(){
             </tr>
         `;
     });
-}
 
+    loadTopics(data);
+}
+function loadTopics(data){
+
+    const select =
+        document.getElementById(
+            "topic-filter"
+        );
+
+    const current =
+        select.value;
+
+    select.innerHTML =
+        '<option value="">All Topics</option>';
+
+    const topics =
+        [...new Set(
+            data.map(
+                p => p[2]
+            )
+        )];
+
+    topics.forEach(topic => {
+
+        select.innerHTML += `
+            <option value="${topic}">
+                ${topic}
+            </option>
+        `;
+    });
+
+    select.value = current;
+}
 loadDashboard();
 document
 .getElementById("problem-form")
@@ -75,6 +149,8 @@ document
     document.getElementById("difficulty").value = "";
 
     loadDashboard();
+loadProblems();
+loadUpcomingRevisions();
 });
 loadDashboard();
 loadProblems();
@@ -102,6 +178,29 @@ async function loadUpcomingRevisions(){
         `;
     });
 }
+loadDashboard();
+loadProblems();
+loadUpcomingRevisions();
+document
+.getElementById("search-box")
+.addEventListener(
+    "input",
+    loadProblems
+);
+
+document
+.getElementById("topic-filter")
+.addEventListener(
+    "change",
+    loadProblems
+);
+
+document
+.getElementById("difficulty-filter")
+.addEventListener(
+    "change",
+    loadProblems
+);
 loadDashboard();
 loadProblems();
 loadUpcomingRevisions();
